@@ -1,0 +1,7 @@
+decoration-service:
+  image: decoration/decoration-service:0.0.1
+  environment:
+    - SPRING_PROFILES_ACTIVE=docker
+    - DOCKER_IP=$DOCKER_IP
+  ports:
+    - 7777:7777

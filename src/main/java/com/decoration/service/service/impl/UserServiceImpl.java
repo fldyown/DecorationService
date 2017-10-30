@@ -36,7 +36,6 @@ public class UserServiceImpl implements IUserService {
             user.setPassword(encodePwd);
             userRepository.save(user);
         }
-        System.out.print("UserVo3:" + user.getEmail() + " =" + user.getUsername());
         return user.getId();
     }
 

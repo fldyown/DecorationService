@@ -13,7 +13,6 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "gradle.plugin.com.arenagod.gradle:mybatis-generator-plugin:1.4"
         classpath "se.transmode.gradle:gradle-docker:1.2"
     }
 }
@@ -23,7 +22,6 @@ apply plugin: 'docker'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.arenagod.gradle.MybatisGenerator'
 
 group = 'decoration'
 version = '0.0.1'
@@ -62,12 +60,12 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-docker
+
+
 jar {
     baseName = 'decoration-service'
     version = '0.0.1'
 }
-//mainClassName = 'com.decoration.service.CoreApplication'
 
 task buildDocker(type: Docker, dependsOn: build) {
 //    push = true

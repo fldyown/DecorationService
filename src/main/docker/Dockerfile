@@ -1,5 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM frolvlad/alpine-oraclejdk8:slim
 VOLUME /tmp
-ADD DecorationService-0.0.1.jar app.jar
-ENV JAVA_OPTS=""
-ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+ADD docker-spring-boot-gradle-1.0.0.jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

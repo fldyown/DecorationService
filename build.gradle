@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.0.M5'
+        springBootVersion = '2.0.0.M7'
     }
     repositories {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
@@ -13,19 +13,31 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "se.transmode.gradle:gradle-docker:1.2"
+        classpath "gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.17.2"
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'docker'
+apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: "com.palantir.docker"
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'decoration'
-version = '0.0.1'
+jar {
+    baseName = 'decoration-service'
+    version =  '0.1.0'
+}
+
+docker {
+    name "${project.group}/${jar.baseName}"
+    files jar.archivePath
+    buildArgs(['JAR_FILE': "${jar.archiveName}"])
+}
+
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
@@ -36,7 +48,6 @@ repositories {
     jcenter()
     mavenCentral()
 }
-
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-aop')
@@ -58,23 +69,4 @@ dependencies {
     runtime('mysql:mysql-connector-java')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
-}
-
-
-
-jar {
-    baseName = 'decoration-service'
-    version = '0.0.1'
-}
-
-task buildDocker(type: Docker, dependsOn: build) {
-//    push = true
-    applicationName = jar.baseName
-    dockerfile = file('src/main/docker/Dockerfile')
-    doFirst {
-        copy {
-            from jar
-            into stageDir
-        }
-    }
 }

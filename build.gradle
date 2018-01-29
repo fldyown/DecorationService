@@ -25,9 +25,12 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'decoration'
+archivesBaseName = 'decoration-service'
+version =  '0.1.0'
+
 jar {
-    baseName = 'decoration-service'
-    version =  '0.1.0'
+    baseName = archivesBaseName
+    version =  version
 }
 
 docker {
@@ -35,9 +38,6 @@ docker {
     files jar.archivePath
     buildArgs(['JAR_FILE': "${jar.archiveName}"])
 }
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
@@ -48,6 +48,9 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-aop')
